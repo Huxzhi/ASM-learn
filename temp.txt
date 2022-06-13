@@ -6,18 +6,10 @@ code segment
 
 
 
-		mov bx,0B800H
-		mov es,bx
-		
-		mov bx,160*10 + 40*2
-
-		mov word ptr es:[bx],5535H
 
 
 
-
-
-
+		;测试专用
 		mov ax,4C00H
 		int 21H
 
