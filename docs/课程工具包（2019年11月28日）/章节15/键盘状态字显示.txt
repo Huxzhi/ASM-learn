@@ -1,0 +1,61 @@
+assume cs:code,ds:data,ss:stack
+
+data segment
+	db	128 dup (0)
+data ends
+stack segment stack
+	db	128 dup (0)
+stack ends
+
+code segment
+	start: 	mov ax,stack
+			mov ss,ax
+			mov sp,128
+
+			call init_reg
+			call show_keyboard_status
+			mov ax,4C00H
+			int 21H
+
+init_reg: 	mov bx,0B800H
+			mov es,bx
+
+			mov bx,40H
+			mov ds,bx
+			ret
+
+show_status:
+			push cx
+			push dx
+			push ds
+			push es
+			push si
+			push di
+			mov cx,8
+showStatus:	mov dx,0	;将al 内的二进制以字符串的形式显示出来
+			shl al,1 	;将最左边的CF=1
+			adc dx,30H	;adc 加法会带上CF的值，刚好显示0和1
+			mov es:[di],dl
+			add di,2
+			loop showStatus
+			
+			pop di
+			pop si
+			pop es
+			pop ds
+			pop dx
+			pop cx
+
+
+			ret
+
+show_keyboard_status:	
+			mov si,17H			;键盘状态字节 保存在0040:17中
+testA:		mov di,160*10+40*2
+			mov al,ds:[si]
+			call show_status
+			jmp testA
+			ret
+
+code ends
+end start
