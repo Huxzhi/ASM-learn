@@ -1,0 +1,67 @@
+; 子程序描述
+; 名称：show str 
+; 功能：在指定的位置，用指定的颜色，显示一个用0结束的字符串。
+; 参数：(d)=行号（取值范围0~24），(d1)=列号（取值范围0~79）， 
+; (cl)=颜色，ds:si指向字符串的首地址
+; 返回：无
+; 应用举例：在屏幕的8行3列，用绿色显示data段中的字符串。
+
+; 吐槽：使用的强大的内联函数，成功将模块化的数据整合成一个屎
+
+assume cs:code
+data segment
+	db 'Welcome to masm!',0
+data ends
+
+stack segment stack
+	db 128 dup(0)
+stack ends
+code segment
+start:		mov ax,stack
+			mov ss,ax
+			mov sp,128
+
+
+			mov dh,8
+			mov dl,3
+			mov cl,2
+			mov ax,data
+			mov ds,ax
+			mov si,0
+			call show_str
+
+			mov ax,4c00h
+			int 21h
+show_str:	call get_raw  ;获取行号，返回值保存在al
+			mov di ,0
+			add di,ax
+			mov dh,0
+			add di,dx
+			add di,dx		;确定了屏幕开始显示的位置
+
+			mov dl,cl 		; cl冲突，dl 没用了，存在dl这
+			mov cx,0
+
+			;copy di to si
+			mov bx,0B800H
+			mov es,bx
+show_string: mov cl,ds:[si]
+			jcxz showStringRet
+
+	
+			mov es:[di],cl
+			inc di
+			mov es:[di],dl
+
+			inc di
+			inc si
+
+
+			jmp show_string
+showStringRet:
+				ret
+get_raw:	mov al,160
+			mul dh
+			ret
+code ends
+end start
