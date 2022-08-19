@@ -1,8 +1,12 @@
 ## 汇编语言(第3版)-王爽-导出@MarginNote3
 
 > 在MarginNote3 中做的笔记 Obsidian Bridge 导出，个人整理的，图片缺失，但是可以搜索和查看
+
+
 > 完整形态是 assets/汇编语言(第3版)-王爽(2022-08-19-20-53-48).marginpkg 和 《汇编语言(第3版)-王爽》.pdf 导入MarginNote3 中，直接跳转查看上下文
 > ![mn3跳转展示](../assets/mn3跳转展示.png)
+
+
 > 半完整形态是打开 assets/汇编语言(第3版)-王爽(2022-08-19-21-04-14).ooutline ，需要的软件是OmniOutliner，可以看到图片还有跳转链接
 
 
