@@ -1,7 +1,7 @@
 
 在 DOSBox 0.74-3-3 的配置文件
 /Users/xxxxxx/Library/Preferences/DOSBox 0.74-3-3 Preferences
-补充以下可以，在启动时自动编译和链接
+补充以下代码，可以在启动时自动编译和链接
 
 ```
 [autoexec]
